@@ -190,21 +190,28 @@ function birthday_validation(year_element, month_element, date_element) {
     birth_year = year_element.val();
     birth_month = month_element.val();
     birth_date = date_element.val();
+    nowDate = new Date();
+    nowYear = nowDate.getFullYear();
+    nowChYear = nowYear - 1911;
 
-    input_birthday_string = birth_year + '-' + birth_month + '-' + birth_date;
-    birthday = new Date(parseInt(birth_year, 10), parseInt(birth_month, 10) - 1,
+    if(birth_year > nowChYear) {
+        return false;
+    } else {
+        input_birthday_string = birth_year + '-' + birth_month + '-' + birth_date;
+        birthday = new Date(parseInt((birth_year), 10)+1911, parseInt(birth_month, 10) - 1,
                         parseInt(birth_date, 10));
-    parsed_birthday_string = birthday.getFullYear().toString() + '-' +
+        parsed_birthday_string = (birthday.getFullYear()-1911).toString() + '-' +
                              (birthday.getMonth() + 1).toString() + '-' +
                              birthday.getDate().toString();
-    if (input_birthday_string != parsed_birthday_string) {
-        return false;
-    }
+        if (input_birthday_string != parsed_birthday_string) {
+            return false;
+        }
+   }
 
     // Check above age 18.
     // FIXME: Different petition has different due date.
-    due_year = 2018;
-    due_month = 7;
+    due_year = nowChYear;
+    due_month = 8;
     due_date = 31;
 
     if (due_year - birth_year < 18) {
@@ -219,7 +226,6 @@ function birthday_validation(year_element, month_element, date_element) {
         due_date < birth_date) {
         return false;
     }
-
     return true;
 }
 
@@ -242,7 +248,10 @@ function data_validation() {
     result = result & valid;
 
     element = $("input#village");
-    valid = element.val() != "";
+    village = element.val();
+    village_name = village.substring(0, village.length - 1);
+    village_type = village.substring(village.length - 1, village.length);
+    valid = element.val() != "" && (village_type == '村' || village_type == '里');
     set_element_style(element, valid);
     result = result & valid;
 
@@ -296,56 +305,13 @@ function update_envelope() {
     receiver_name = '';
 
     county = $("select#county").val();
-    if (county == '基隆市') {
-        receiver_zipcode = '20048';
-        receiver_address = '基隆市仁愛區仁二路81號2樓';
-        receiver_name = '人民民主陣線';
-    } else if (county == '臺北市') {
-        receiver_zipcode = '10452';
-        receiver_address = '台北市中山區德惠街3巷10號1樓';
-        receiver_name = '台灣國際勞工協會';
-    } else if (county == '新北市') {
-        receiver_zipcode = '10452';
-        receiver_address = '臺北市中山區民權西路27號2樓';
-        receiver_name = '全國教師工會總聯合會';
-    } else if (county == '桃園市') {
-        receiver_zipcode = '33441';
-        receiver_address = '桃園市八德區介壽路一段199號3樓';
-        receiver_name = '桃園市產業總工會';
-    } else if (county == '新竹縣' || county == '新竹市' || county == '苗栗縣') {
-        receiver_zipcode = '30268';
-        receiver_address = '新竹縣竹北市縣政二路606號';
-        receiver_name = '勞動黨';
-    } else if (county == '臺中市') {
-        receiver_zipcode = '42242';
-        receiver_address = '台中市石岡區豐勢路梅子巷37-6號';
-        receiver_name = '台灣社區重建協會';
-    } else if (county == '彰化縣' || county == '南投縣' || county == '雲林縣') {
-        receiver_zipcode = '63801';
-        receiver_address = '雲林縣麥寮鄉台塑工業園區8號福利大樓2樓';
-        receiver_name = '雲林縣產業總工會';
-    } else if (county == '嘉義縣' || county == '嘉義市') {
-        receiver_zipcode = '24162';
-        receiver_address = '新北市三重區力行路1段127號2樓';
-        receiver_name = '新海瓦斯工會';
-    } else if (county == '臺南市' || county == '金門縣' || county == '澎湖縣' ||
-               county == '連江縣') {
-        receiver_zipcode = '71752';
-        receiver_address = '台南市仁德區中山路136號';
-        receiver_name = '台南市產業總工會';
-    } else if (county == '高雄市' || county == '屏東縣') {
-        receiver_zipcode = '80660';
-        receiver_address = '高雄市前鎮區中山三路132號4樓';
-        receiver_name = '高雄市產業總工會';
-    } else if (county == '宜蘭縣' || county == '花蓮縣' || county == '臺東縣') {
-        receiver_zipcode = '26946';
-        receiver_address = '宜蘭縣冬山鄉冬山路170號';
-        receiver_name = '宜蘭縣產業總工會';
-    }
-
+        receiver_zipcode = '30099';
+        receiver_address = '新竹市清華大學郵局 第180號信箱';
+        receiver_name = '以核養綠公投領銜人 黃士修 先生';
+    
     $("span#receiver_zipcode").text(receiver_zipcode);
     $("span#receiver_address").text(receiver_address);
-    $("span#receiver_name").text(receiver_name + '　　收');
+    $("span#receiver_name").text(receiver_name + '　收');
 }
 
 function form_data_change() {

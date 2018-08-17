@@ -39,7 +39,7 @@ div.stamp {
     top: 0mm;
     right: 0mm;
     height: 40mm;
-    width: 74mm;
+    width: 85mm;
     text-align: center;
 }
 
@@ -58,7 +58,7 @@ span#stamp {
     border: 2px solid Gainsboro;
     top: 5mm;
     height: 30mm;
-    width: 30mm;
+    width: 35mm;
 }
 
 span#sender_zipcode {
@@ -96,21 +96,21 @@ div.receiver {
 span#receiver_zipcode {
     display: block;
     font-family: 'Inconsolata', monospace;
-    font-size: 28px;
+    font-size: 32px;
     left: 0px;
 }
 
 span#receiver_address {
     display: block;
     position: absolute;
-    font-size: 26px;
+    font-size: 24px;
     left: 0px;
 }
 
 span#receiver_name {
     display: block;
     position: absolute;
-    font-size: 26px;
+    font-size: 22px;
     left: 0px;
     top: 100px;
 }
